@@ -70,6 +70,7 @@ Vue.prototype.$mount = function (
         comments: options.comments
       }, this)
       options.render = render
+      // QS staticRenderFns作用？(A: vm._m = staticRenderFns，静态vue的render会调用vm._m)
       options.staticRenderFns = staticRenderFns
 
       /* istanbul ignore if */

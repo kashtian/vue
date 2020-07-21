@@ -1,4 +1,5 @@
 /* @flow */
+// QS VNode缓存在哪里的？
 
 export default class VNode {
   tag: string | void;

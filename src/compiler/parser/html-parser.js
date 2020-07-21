@@ -65,6 +65,7 @@ export function parseHTML (html, options) {
       let textEnd = html.indexOf('<')
       if (textEnd === 0) {
         // Comment:
+        // TIANSHI 跳过注释
         if (comment.test(html)) {
           const commentEnd = html.indexOf('-->')
 
@@ -77,6 +78,7 @@ export function parseHTML (html, options) {
           }
         }
 
+        // TIANSHI 跳过条件注释
         // http://en.wikipedia.org/wiki/Conditional_comment#Downlevel-revealed_conditional_comment
         if (conditionalComment.test(html)) {
           const conditionalEnd = html.indexOf(']>')
@@ -86,7 +88,8 @@ export function parseHTML (html, options) {
             continue
           }
         }
-
+        
+        // TIANSHI 跳过doctype声明
         // Doctype:
         const doctypeMatch = html.match(doctype)
         if (doctypeMatch) {
@@ -103,6 +106,7 @@ export function parseHTML (html, options) {
           continue
         }
 
+        // TIANSHI 解析开始标签及属性，非一元标签入栈
         // Start tag:
         const startTagMatch = parseStartTag()
         if (startTagMatch) {

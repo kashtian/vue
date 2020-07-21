@@ -295,6 +295,7 @@ export function validateComponentName (name: string) {
  * Ensure all props option syntax are normalized into the
  * Object-based format.
  */
+// TIANSHI  标准化props为对象格式
 function normalizeProps (options: Object, vm: ?Component) {
   const props = options.props
   if (!props) return
@@ -427,6 +428,7 @@ export function mergeOptions (
       mergeField(key)
     }
   }
+  // TIANSHI 使用策略模式合并options字段
   function mergeField (key) {
     const strat = strats[key] || defaultStrat
     options[key] = strat(parent[key], child[key], vm, key)

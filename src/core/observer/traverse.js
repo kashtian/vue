@@ -23,6 +23,7 @@ function _traverse (val: any, seen: SimpleSet) {
     return
   }
   if (val.__ob__) {
+    // TIANSHI 避开循环引用
     const depId = val.__ob__.dep.id
     if (seen.has(depId)) {
       return

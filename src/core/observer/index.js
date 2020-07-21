@@ -45,6 +45,7 @@ export class Observer {
     this.vmCount = 0
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
+      // TIANSHI 对数组原生方法的拦截是在Array实例上通过修改其__proto__属性或直接拷贝到实例上
       if (hasProto) {
         protoAugment(value, arrayMethods)
       } else {
@@ -139,6 +140,7 @@ export function defineReactive (
   customSetter?: ?Function,
   shallow?: boolean
 ) {
+  // TIANSHI 闭包里的dep, 作为对象属性的依赖收集
   const dep = new Dep()
 
   const property = Object.getOwnPropertyDescriptor(obj, key)
@@ -159,9 +161,11 @@ export function defineReactive (
     configurable: true,
     get: function reactiveGetter () {
       const value = getter ? getter.call(obj) : val
+      // TIANSHI 通过触发get收集依赖
       if (Dep.target) {
         dep.depend()
         if (childOb) {
+          // TIANSHI 将依赖加入到子对象中，当使用$set添加新属性时，可以通过this.dep触发通知
           childOb.dep.depend()
           if (Array.isArray(value)) {
             dependArray(value)
@@ -198,6 +202,8 @@ export function defineReactive (
  * triggers change notification if the property doesn't
  * already exist.
  */
+// TIANSHI 不能通过$set(this)给data添加属性
+// QS ob.dep.notify通知后，触发渲染，触发属性get,加入依赖？
 export function set (target: Array<any> | Object, key: any, val: any): any {
   if (process.env.NODE_ENV !== 'production' &&
     (isUndef(target) || isPrimitive(target))
@@ -205,6 +211,7 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
     warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
   }
   if (Array.isArray(target) && isValidArrayIndex(key)) {
+    // QS 为什么要手动更新length?是为了length的响应吗？
     target.length = Math.max(target.length, key)
     target.splice(key, 1, val)
     return val

@@ -109,7 +109,8 @@ export function parse (
       warn(msg, range)
     }
   }
-
+  
+  // LAST 看到这里了
   function closeElement (element) {
     trimEndingWhitespace(element)
     if (!inVPre && !element.processed) {
@@ -297,6 +298,7 @@ export function parse (
       }
     },
 
+    // TIANSHI 遇到结束标签，将当前栈顶开始标签出栈，更新currentParent为栈顶开始标签
     end (tag, start, end) {
       const element = stack[stack.length - 1]
       // pop stack
@@ -508,6 +510,7 @@ type ForParseResult = {
   iterator2?: string;
 };
 
+// TIANSHI 解析v-for的值，res.for是list, res.alias是value
 export function parseFor (exp: string): ?ForParseResult {
   const inMatch = exp.match(forAliasRE)
   if (!inMatch) return
@@ -536,6 +539,7 @@ function processIf (el) {
       block: el
     })
   } else {
+    // QS v-else, v-else-if应该不能同时存在吧
     if (getAndRemoveAttr(el, 'v-else') != null) {
       el.else = true
     }
