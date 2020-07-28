@@ -157,7 +157,7 @@ export function getRawBindingAttr (
     el.rawAttrsMap['v-bind:' + name] ||
     el.rawAttrsMap[name]
 }
-
+// TIANSHI 处理:属性或JSON.stringify的静态属性
 export function getBindingAttr (
   el: ASTElement,
   name: string,

@@ -16,6 +16,7 @@ export function initExtend (Vue: GlobalAPI) {
   /**
    * Class inheritance
    */
+  // TIANSHI 创建继承自Vue的Sub函数, extendOptions: 组件export default {}
   Vue.extend = function (extendOptions: Object): Function {
     extendOptions = extendOptions || {}
     const Super = this
@@ -29,7 +30,8 @@ export function initExtend (Vue: GlobalAPI) {
     if (process.env.NODE_ENV !== 'production' && name) {
       validateComponentName(name)
     }
-
+    // QS 何时实例化Sub? options有什么？
+    // as: patch时创建组件，options: {_isComponent: true, ...}
     const Sub = function VueComponent (options) {
       this._init(options)
     }

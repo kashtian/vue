@@ -72,6 +72,7 @@ export function createPatchFunction (backend) {
 
   const { modules, nodeOps } = backend
 
+  // TIANSHI cbs: {update: [updateStyle,...], ...}, web平台：用来更新,style, class, attrs, domProps等
   for (i = 0; i < hooks.length; ++i) {
     cbs[hooks[i]] = []
     for (j = 0; j < modules.length; ++j) {
@@ -697,6 +698,7 @@ export function createPatchFunction (backend) {
     }
   }
   // QS patch是在哪里执行的？
+  // as: 在vm._update里执行，当触发渲染就会调用_update
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)

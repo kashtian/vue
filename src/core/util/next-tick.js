@@ -12,6 +12,7 @@ let pending = false
 
 function flushCallbacks () {
   pending = false
+  // TIANSHI 拷贝是为了防止nexttick中包含nexttick, 包含的nexttick需要在下一次事件循环中执行
   const copies = callbacks.slice(0)
   callbacks.length = 0
   for (let i = 0; i < copies.length; i++) {

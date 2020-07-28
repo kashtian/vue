@@ -12,7 +12,7 @@ export function initProvide (vm: Component) {
       : provide
   }
 }
-
+// TIANSHI 向上查找包含_provided的父组件，定义成响应式到当前vm，其值不进行reactive
 export function initInjections (vm: Component) {
   const result = resolveInject(vm.$options.inject, vm)
   if (result) {

@@ -60,7 +60,7 @@ export function initState (vm: Component) {
     initWatch(vm, opts.watch)
   }
 }
-
+// TIANSHI 校验props值，将vm._props值代理到vm上，并添加开发环境setter提示
 function initProps (vm: Component, propsOptions: Object) {
   const propsData = vm.$options.propsData || {}
   const props = vm._props = {}
@@ -108,7 +108,7 @@ function initProps (vm: Component, propsOptions: Object) {
   }
   toggleObserving(true)
 }
-
+// TIANSHI 执行options.data函数，将vm._data代理到vm, observe data
 function initData (vm: Component) {
   let data = vm.$options.data
   data = vm._data = typeof data === 'function'
@@ -153,6 +153,7 @@ function initData (vm: Component) {
 
 export function getData (data: Function, vm: Component): any {
   // #7573 disable dep collection when invoking data getters
+  // TIANSHI 防止用props初始化data时，导致的冗余的依赖收集
   pushTarget()
   try {
     return data.call(vm, vm)
@@ -165,7 +166,7 @@ export function getData (data: Function, vm: Component): any {
 }
 
 const computedWatcherOptions = { lazy: true }
-
+// TIANSHI 将options.computed key复制到vm，get函数非服务端渲染会缓存值,只在响应式依赖发生改变时求值
 function initComputed (vm: Component, computed: Object) {
   // $flow-disable-line
   const watchers = vm._computedWatchers = Object.create(null)
@@ -245,6 +246,7 @@ function createComputedGetter (key) {
       if (watcher.dirty) {
         watcher.evaluate()
       }
+      // QS 不明白这里为什么还需要watcher.depend()?
       if (Dep.target) {
         watcher.depend()
       }
@@ -258,7 +260,7 @@ function createGetterInvoker(fn) {
     return fn.call(this, this)
   }
 }
-
+// TIANSHI 将options.methods复制到vm, 并绑定method this为vm
 function initMethods (vm: Component, methods: Object) {
   const props = vm.$options.props
   for (const key in methods) {
@@ -286,7 +288,7 @@ function initMethods (vm: Component, methods: Object) {
     vm[key] = typeof methods[key] !== 'function' ? noop : bind(methods[key], vm)
   }
 }
-
+// TIANSHI 调用$watch生成watcher
 function initWatch (vm: Component, watch: Object) {
   for (const key in watch) {
     const handler = watch[key]
@@ -315,7 +317,7 @@ function createWatcher (
   }
   return vm.$watch(expOrFn, handler, options)
 }
-
+// TIANSHI 添加$set, $delete, $watch方法
 export function stateMixin (Vue: Class<Component>) {
   // flow somehow has problems with directly declared definition object
   // when using Object.defineProperty, so we have to procedurally build up

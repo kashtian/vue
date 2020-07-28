@@ -81,6 +81,7 @@ function getPropDefaultValue (vm: ?Component, prop: PropOptions, key: string): a
   }
   // the raw prop value was also undefined from previous render,
   // return previous default value to avoid unnecessary watcher trigger
+  // TIANSHI 这段代码用于updateChildComponent，此时propsData, _props还未更新
   if (vm && vm.$options.propsData &&
     vm.$options.propsData[key] === undefined &&
     vm._props[key] !== undefined

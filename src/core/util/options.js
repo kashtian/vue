@@ -333,6 +333,7 @@ function normalizeProps (options: Object, vm: ?Component) {
 /**
  * Normalize all injections into Object-based format
  */
+// TIANSHI inject标准化为对象格式{from: 'xx'}
 function normalizeInject (options: Object, vm: ?Component) {
   const inject = options.inject
   if (!inject) return

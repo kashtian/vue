@@ -25,6 +25,7 @@ const ALWAYS_NORMALIZE = 2
 
 // wrapper function for providing a more flexible interface
 // without getting yelled at by flow
+// TIANSHI VUE创建的render函数，简单标准化，用户创建的render，总是标准化, 针对children做flat处理
 export function createElement (
   context: Component,
   tag: any,
@@ -79,6 +80,7 @@ export function _createElement (
       )
     }
   }
+  // QS scoped slot支持function ?
   // support single function children as default scoped slot
   if (Array.isArray(children) &&
     typeof children[0] === 'function'

@@ -170,6 +170,7 @@ export function queueWatcher (watcher: Watcher) {
     } else {
       // if already flushing, splice the watcher based on its id
       // if already past its id, it will be run next immediately.
+      // TIANSHI watcher队列已开始执行，将watcher按id顺序插入队列中
       let i = queue.length - 1
       while (i > index && queue[i].id > watcher.id) {
         i--

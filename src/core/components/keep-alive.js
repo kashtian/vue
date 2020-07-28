@@ -106,6 +106,7 @@ export default {
       if (cache[key]) {
         vnode.componentInstance = cache[key].componentInstance
         // make current key freshest
+        // TIANSHI 调整组件key的顺序，涉及到max上限，删除最久没用的组件
         remove(keys, key)
         keys.push(key)
       } else {

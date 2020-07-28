@@ -48,7 +48,7 @@ export function updateComponentListeners (
   updateListeners(listeners, oldListeners || {}, add, remove, createOnceHandler, vm)
   target = undefined
 }
-
+// TIANSHI 添加$on, $once, $emit, $off事件方法
 export function eventsMixin (Vue: Class<Component>) {
   const hookRE = /^hook:/
   Vue.prototype.$on = function (event: string | Array<string>, fn: Function): Component {

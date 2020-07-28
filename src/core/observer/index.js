@@ -165,7 +165,7 @@ export function defineReactive (
       if (Dep.target) {
         dep.depend()
         if (childOb) {
-          // TIANSHI 将依赖加入到子对象中，当使用$set添加新属性时，可以通过this.dep触发通知
+          // TIANSHI 将依赖加入到子对象中，当使用$set添加新属性时，可以通过this.dep触发通知,数组push等方法也是这样更新的
           childOb.dep.depend()
           if (Array.isArray(value)) {
             dependArray(value)
@@ -203,7 +203,7 @@ export function defineReactive (
  * already exist.
  */
 // TIANSHI 不能通过$set(this)给data添加属性
-// QS ob.dep.notify通知后，触发渲染，触发属性get,加入依赖？
+// QS ob.dep.notify通知后，触发渲染，触发属性get,加入依赖？(as: 应该是这样)
 export function set (target: Array<any> | Object, key: any, val: any): any {
   if (process.env.NODE_ENV !== 'production' &&
     (isUndef(target) || isPrimitive(target))

@@ -38,6 +38,8 @@ export function initRender (vm: Component) {
   const parentData = parentVnode && parentVnode.data
 
   /* istanbul ignore else */
+  // QS $attrs, $listeners会被赋值吗？为何需要响应式？
+  // as: 更新子组件时会更新这两个值
   if (process.env.NODE_ENV !== 'production') {
     defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, () => {
       !isUpdatingChildComponent && warn(`$attrs is readonly.`, vm)
